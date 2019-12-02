@@ -1,80 +1,117 @@
 package edu.upenn.cit594.ui;
-
-import java.io.IOException;
+import java.io.File;
 import java.util.Scanner;
 
-import edu.upenn.cit594.logging.Logger;
+/*
+ * Purpose : The program should then prompt the user to specify the action to be performed.
+ *  
+ * Note : Error message was return directly to avoid overhead resulted from the creation of unnecessary string or error objectives.   
+ * 
+ * Error Messages in this class : 
+ * rt_e1 = The number of runtime arguments is incorrect. Please try again.";
+ * rt_e2 = The first argument is neither “csv” or “json” (case-sensitive).
+ * rt_e3 = The specified input files do not exist.
+ * rt_e4 = The specified input files cannot be opened for reading (e.g. because of file permissions).
+ * a_e1 = Invalid input please input a single digit number range from 0 to 6. Please try again.
+ */
 
-public class UserInput {
-            
+public class UserInput {            
     private Scanner in;
-    // Potential runtime errors 
-    String rt_e1 = "The number of runtime arguments is incorrect. Please try again.";
-    String rt_e2 = "The first argument is neither “csv” or “json” (case-sensitive)";
-    String rt_e3 = "The specified input files do not exist or cannot be opened for reading (e.g. because of file permissions)";     
-     
-    String welcome = "Welcome. Please specify the action to be performed by typing a single digit number range from 0 to 6 :";
-    String action_e1 = "Invalid inpu,t please input a single digit number range from 0 to 6.";
+    private int currentChoice;
     
 /*
- * The program should then prompt the user to specify the action to be performed: 
- * 0 = quit
- * 1 = total population for all ZIP Codes. 
- * 2 = total parking fines per capita for each ZIP Code
- * 3 = average market value for residences in a specified ZIP Code
- * 4 = total livable area for residences in a specified ZIP Code
- * 5 = the total residential market value per capita for a specified ZIP Code
- * 6 = the results of your custom feature
- * Other = show an error message and terminate : such as: ● “1 2” ● “ 1” ● “4dog” ● “1.0”
+ * The program should then prompt the user to specify the action to be performed.
  */
     
-    // 1. Private constructor
+    /* 1. Private constructor */
     private UserInput() {
 	in = new Scanner(System.in);
     }
-
-    // 2. Singleton instance
+    
+    /* 2. Singleton instance */
     private static UserInput instance = new UserInput();
-
-    // 3. Singleton accessor method
+    
+    /* 3. Singleton access-or method */
     public static UserInput getInstance() {
 	return instance;
     }
     
-    // 4. Read String[] and return whether the input is valid or not
+    /* 4. User inputs checking, overloaded with String[] and string; */
     public boolean checkInput(String[] input) {	
-	try {
-	    // Check for e1 and e2
-	    if (input.length != 4) {
-		throw new IOException(e1);
-	    }
+	String test ;	
+	// Check for run time errors
+	test = checkArgs(input);
+	if (test.compareTo("Good")!=0) {
+	    System.out.println(test);
+	    return false;
+	}	
+	// If all good, print welcome message
+	welcomeMessage();
+	return true;
+    }
+    
+    public boolean checkInput(String consoleInput) {
+	return consoleCheck();
+    }
+    
+    /* Section of helper methods */
 
-	    // Check for e2
-	    String tweetFileFormat = input[0].toLowerCase();
-	    if ((tweetFileFormat.equals("json")) && (tweetFileFormat.equals("text"))) {
-		throw new IOException(e2);
-	    }
-	    
-	} catch (IOException e) {
-	    System.out.println("Error: " + e);
-	    System.exit(0);
+    /* H1- Runtime arguments check */
+    private String checkArgs(String[] runTimeArgs) {	
+	/* Number of arguments */ 
+	if (runTimeArgs.length != 5) {
+	    return "The number of runtime arguments is incorrect. Please try again.";
+	}	
+	/* Valid file type */
+	String fileType = runTimeArgs[0];
+	if ((fileType.compareTo("json")!=0)|(fileType.compareTo("csv")!=0)) {
+	    return "The first argument is neither “csv” or “json” (case-sensitive).";
+	}	
+	/* File existence testing and open-able */	
+	File f; // TODO : potential optimization area 
+	String filename;
+	for (int i = 1 ; i < 5 ; i++) {
+	    filename = runTimeArgs[i];
+	    f = new File(filename);
+	    if (!f.exists()) return "The specified input files "+filename+" do not exist.";
+	    if (!f.canRead()) return "The specified input files "+filename+" cannot be opened for reading (e.g. because of file permissions).";
 	}
-		
-	// Read state file first;
-	String stateFileName = input[2];
-	boolean stateFileCheck = r.read("csv", stateFileName);
-		
-	String tweetFileFormat = input[0].toLowerCase();
-	String tweetFileName = input[1];
-	boolean tweetFileCheck = r.read(tweetFileFormat, tweetFileName);
+	return "Good";
+    }
+    
+    /* H2 - Console input check */ 
+    private boolean consoleCheck() {
+	System.out.println("Please specify the action to be performed by typing a single digit number range from 0 to 6 :");
+	if (in.hasNextInt()) {
+	    int choice = in.nextInt();
+	    if ((choice<0)|(choice>7)) {
+		System.out.println("Invalid input please input a single digit number range from 0 to 6.");
+		return false ;
+	    } 
+	    if (choice == 0) {
+		return false;
+	    } else {
+		currentChoice = choice;
+		return true;
+	    }	    
+	} else return false;   
+    }
 	
-	String logFileName = input[3];
-	l.setFileName(logFileName);
-
-	if (stateFileCheck && tweetFileCheck)
-	    return true;
-
-	return false;
+    /* H3 - Print welcome message */ 
+    private void welcomeMessage() {
+	System.out.println("Welcome. Please specify the action to be performed by typing a single digit number range from 0 to 6 :");
+	System.out.println("\t0 - quit;");
+	System.out.println("\t1 - total population for all ZIP Codes;");
+	System.out.println("\t2 - total parking fines per capita for each ZIP Code;");
+	System.out.println("\t3 - average market value for residences in a specified ZIP Code;");
+	System.out.println("\t4 - total livable area for residences in a specified ZIP Code;");
+	System.out.println("\t5 - total residential market value per capita for a specified ZIP Code;");
+	System.out.println("\t6 - ");
+    }
+    
+    /* H4 - Getter for the current choice */
+    public int getCurrentChoice() {
+	return currentChoice;
     }
 
 }
