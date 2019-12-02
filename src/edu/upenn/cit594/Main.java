@@ -4,6 +4,7 @@ package edu.upenn.cit594;
  */
 import edu.upenn.cit594.datamanagement.Reader;
 import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.Processor;
 import edu.upenn.cit594.ui.Presenter;
 import edu.upenn.cit594.ui.UserInput;
 
@@ -18,25 +19,26 @@ public class Main {
 	args = args2;
 	*/
 	
-	// get an instance of FileReader 
-	Reader r = Reader.getInstance(); 
-	
-	// get an instance of UserInput  
-	UserInput aV = UserInput.getInstance();
-	aV.checkInput(args); // Validae
-	
-	// Initialize the scanner for system input
-	Boolean running = true;
-	
-	// get an instance of Logger
+	// get an instance of UserInput, Reader, Processor, Presenter and logger 
+	UserInput uI = UserInput.getInstance();
+	Reader read = Reader.getInstance(); 
+	Processor ps = Processor.getInstance();	
 	Logger l = Logger.getInstance();
-	l.generateFile(); // TODO : update to what this HW is 
-	
-	// get an instance of Presenter
 	Presenter p = Presenter.getInstance();
-	p.printStateSummary();
 	
-	// Getting user input 
+	// While loop to receive instructions and act upon.	
+	Boolean running = uI.checkInput(args);
+	int currentChoice = uI.getCurrentChoice();
+	int currentZip = uI.getCurrentZip();
+	while(running) {
+	    ps.Answer(currentChoice, currentZip);
+	    running = uI.checkInput();
+	}
+	
+	// Outputs
+	l.generateFile(); // TODO : update to what this HW is 	
+	p.printSummary(); // TODO : update to what this HW is
+	 
 	
     }
 

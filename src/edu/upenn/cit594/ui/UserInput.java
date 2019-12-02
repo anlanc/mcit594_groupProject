@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class UserInput {            
     private Scanner in;
     private int currentChoice;
+    private int currentZip;
     
 /*
  * The program should then prompt the user to specify the action to be performed.
@@ -36,7 +37,7 @@ public class UserInput {
 	return instance;
     }
     
-    /* 4. User inputs checking, overloaded with String[] and string; */
+    /* 4. User inputs checking, overloaded with String[] and null; */
     public boolean checkInput(String[] input) {	
 	String test ;	
 	// Check for run time errors
@@ -50,7 +51,7 @@ public class UserInput {
 	return true;
     }
     
-    public boolean checkInput(String consoleInput) {
+    public boolean checkInput() {
 	return consoleCheck();
     }
     
@@ -92,7 +93,11 @@ public class UserInput {
 		return false;
 	    } else {
 		currentChoice = choice;
-		return true;
+		if ((choice==3)|(choice==4)|(choice==5)){
+		    System.out.println("For # "+choice+" , please provide the five digits zip code to look up for :");
+		    return validateZipCode(); 
+		}
+		else return true;
 	    }	    
 	} else return false;   
     }
@@ -114,4 +119,18 @@ public class UserInput {
 	return currentChoice;
     }
 
+    /* H5 - Getter for the current zip code */
+    public int getCurrentZip() {
+	return currentZip;
+    }
+    
+    /* H6 - Validate the zipCode */
+    // TODO : call processor to test the zip code 
+    public boolean validateZipCode() {
+	// TODO : to fill in the body
+	if (in.hasNextInt()) {
+	    currentZip = in.nextInt();
+	}
+	return true;
+    }
 }

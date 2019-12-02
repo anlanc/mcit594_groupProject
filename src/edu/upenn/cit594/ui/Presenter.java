@@ -21,7 +21,7 @@ public class Presenter {
     }
     
     // print state summary
-    public void printStateSummary() {
+    public void printSummary() {
 	
 	for (int i = 0 ; i<impactSummary.size(); i++) {
 	    System.out.println(impactSummary.get(i));
