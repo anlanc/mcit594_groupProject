@@ -2,6 +2,8 @@ package edu.upenn.cit594.ui;
 import java.io.File;
 import java.util.Scanner;
 
+import edu.upenn.cit594.processor.Processor;
+
 /*
  * Purpose : The program should then prompt the user to specify the action to be performed.
  *  
@@ -124,13 +126,16 @@ public class UserInput {
 	return currentZip;
     }
     
-    /* H6 - Validate the zipCode */
-    // TODO : call processor to test the zip code 
+    /* H6 - Validate the zipCode */ 
     public boolean validateZipCode() {
-	// TODO : to fill in the body
 	if (in.hasNextInt()) {
-	    currentZip = in.nextInt();
+	    int providedZip = in.nextInt();
+	    Processor psr = Processor.getInstance();
+	    if(psr.zipcodePA(providedZip)) {
+		currentZip = providedZip;		
+		return true;
+	    } else return false;    
 	}
-	return true;
+	else return false;
     }
 }

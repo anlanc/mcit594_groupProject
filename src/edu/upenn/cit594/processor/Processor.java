@@ -18,6 +18,10 @@ public class Processor {
 	// if no zipCOde required, will provide 99999
     }
     
+    public boolean zipcodePA(int zipcode) {
+	// if the list of XX contains zip code
+	return true;
+    }
     
         
 }
