@@ -1,11 +1,13 @@
 package edu.upenn.cit594.ui;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeMap;
 
 import edu.upenn.cit594.processor.Processor;
 
-/* 1. Handle printing the output to the screen 
- * 
- */
+/* 1. Handle printing the output to the screen */
+
 public class Presenter {
     ArrayList<String> impactSummary;  
     UserInput ui;
@@ -33,9 +35,13 @@ public class Presenter {
 	    System.out.println(p.getSumPop());
 	    break;
 	case 2:	    
-	    
-	    String a2 = ""+zip+" "+p.getTotalFinesperCap();
-	    a2 = a2.substring(0, a2.indexOf('.')+5);
+	    TreeMap<Integer, Double> totalFinesPerCap = p.getTotalFinesperCap();
+	    Set<Integer> zipcodes = totalFinesPerCap.keySet();
+	    for (Iterator<Integer> i = zipcodes.iterator(); i.hasNext();) {
+		Integer zipC = (Integer) i.next();
+		double finesPerCap = ((int) (totalFinesPerCap.get(zipC)*10000))/10000;
+		System.out.println(zipC + " = " + finesPerCap);
+	    }
 	    break;
 	case 3:
 	    System.out.println(p.getAveResMV(zip));
