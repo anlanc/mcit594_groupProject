@@ -1,7 +1,5 @@
 package edu.upenn.cit594.ui;
 import java.util.ArrayList;
-import java.util.TreeMap;
-
 
 import edu.upenn.cit594.processor.Processor;
 
@@ -41,12 +39,19 @@ public class Presenter {
 	    break;
 	case 3:
 	    System.out.println(p.getAveResMV(zip));
+	    break;
 	case 4:
 	    System.out.println(p.getAveResTLA(zip));
+	    break;
 	case 5:
 	    System.out.println(p.getTotalResMVperCap(zip));
+	    break;	    
 	case 6:
-	    System.out.println(p.get_FineperTicket_to_HousingAffordability_Ratio(zip));	
+	    String[] rank = p.getRank();
+	    for (int i = 0 ; i < rank.length ; i++) {
+		System.out.println(rank[i]);
+	    }
+	    break;
 	}
     }   
 
