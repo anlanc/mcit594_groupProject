@@ -24,6 +24,7 @@ public class Processor {
     
     // 1. Private constructor 
     private Processor() {	
+	rank(); // q6
     }
     
     // 2. Singleton instance
