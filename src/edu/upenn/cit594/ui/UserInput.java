@@ -2,6 +2,7 @@ package edu.upenn.cit594.ui;
 import java.io.File;
 import java.util.Scanner;
 
+import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
 /*
@@ -72,13 +73,15 @@ public class UserInput {
 	}	
 	/* File existence testing and open-able */	
 	File f; // TODO : potential optimization area 
-	String filename;
+	String filename = runTimeArgs[1];
 	for (int i = 1 ; i < 5 ; i++) {
 	    filename = runTimeArgs[i];
 	    f = new File(filename);
 	    if (!f.exists()) return "The specified input files "+filename+" do not exist.";
 	    if (!f.canRead()) return "The specified input files "+filename+" cannot be opened for reading (e.g. because of file permissions).";
 	}
+	Logger l = Logger.getInstance();
+	l.setFileName(filename);
 	return "Good";
     }
     
@@ -95,7 +98,7 @@ public class UserInput {
 		return false;
 	    } else {
 		currentChoice = choice;
-		if ((choice==3)|(choice==4)|(choice==5)){
+		if ((choice>=3)|(choice<=6)){
 		    System.out.println("For # "+choice+" , please provide the five digits zip code to look up for :");
 		    return validateZipCode(); 
 		}
@@ -107,13 +110,13 @@ public class UserInput {
     /* H3 - Print welcome message */ 
     private void welcomeMessage() {
 	System.out.println("Welcome. Please specify the action to be performed by typing a single digit number range from 0 to 6 :");
-	System.out.println("\t0 - quit;");
+	System.out.println("\t0 - exit;");
 	System.out.println("\t1 - total population for all ZIP Codes;");
 	System.out.println("\t2 - total parking fines per capita for each ZIP Code;");
 	System.out.println("\t3 - average market value for residences in a specified ZIP Code;");
 	System.out.println("\t4 - total livable area for residences in a specified ZIP Code;");
 	System.out.println("\t5 - total residential market value per capita for a specified ZIP Code;");
-	System.out.println("\t6 - ");
+	System.out.println("\t6 - rank of parking fines per capita and rank of avergae market value of a specified ZIP Code;");
     }
     
     /* H4 - Getter for the current choice */

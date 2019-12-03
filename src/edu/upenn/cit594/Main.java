@@ -33,13 +33,10 @@ public class Main {
 	while(running) {
 	    ps.Answer(currentChoice, currentZip);
 	    running = uI.checkInput();
-	}
-	
-	// Outputs
-	l.generateFile(); // TODO : update to what this HW is 	
-	p.printSummary(); // TODO : update to what this HW is
-	 
-	
+	    if (running) {
+		p.answer();
+		l.track();
+	    }
+	}	
     }
-
 }
