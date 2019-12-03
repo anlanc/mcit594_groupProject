@@ -28,15 +28,14 @@ public class Main {
 	
 	// While loop to receive instructions and act upon.	
 	Boolean running = uI.checkInput(args);
-	int currentChoice = uI.getCurrentChoice();
-	int currentZip = uI.getCurrentZip();
+	l.generateFile(args);
 	while(running) {
-	    ps.Answer(currentChoice, currentZip);
 	    running = uI.checkInput();
+	    l.trackUI();
 	    if (running) {
 		p.answer();
-		l.track();
 	    }
-	}	
+	}
+	
     }
 }

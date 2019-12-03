@@ -24,7 +24,7 @@ public class Presenter {
     }
     
     /* Q1 Present the answer */
-    public void answer(int question, int zipcode) {
+    public void answer() {
 	ui = UserInput.getInstance();
 	p = Processor.getInstance();
 	int zip = ui.getCurrentZip();
