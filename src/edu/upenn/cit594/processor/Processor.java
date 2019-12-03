@@ -2,6 +2,7 @@ package edu.upenn.cit594.processor;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,8 +19,7 @@ public class Processor {
     Map<Integer, ArrayList<PropertyValue>> pptMap = new Map<Integer, ArrayList<PropertyValue>>();
     Map<Integer, ArrayList<Population>> popMap = new Map<Integer, ArrayList<Population>>();
     //	Q6 : 
-    Map<Integer, Double> prkFine = new Map<Integer, Double>();
-    Map<Integer, Double> prkFine = new Map<Integer, Double>();
+    Map<Integer, Double> prkFineTotal = new HashMap<Integer, Double>();
     String[] rankedZip = new String[11];
     
     // 1. Private constructor 
@@ -83,8 +83,8 @@ public class Processor {
 	);	
 	sortByAvgFine.sort(
 		(zip1, zip2) -> {
-		    double fpp1 = prkFine.get(zip1)/prkMap.get(zip1).size();
-		    double fpp2 = prkFine.get(zip2)/prkMap.get(zip2).size();
+		    double fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size();
+		    double fpp2 = prkFineTotal.get(zip2)/prkMap.get(zip2).size();
 	            return (int) (fpp1 - fpp2);
 	        }
 	);	

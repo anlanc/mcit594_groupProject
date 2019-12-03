@@ -1,16 +1,18 @@
 package edu.upenn.cit594.datamanagement;
 
+import edu.upenn.cit594.logging.Logger;
+import sun.util.logging.resources.logging;
+
 public class Reader {
-    // 1. Private constructor
-    private Reader() {
+    Logger l;
+    
+    public Reader() {
+	l = Logger.getInstance();
+
     }
-
-    // 2. Singleton instance
-    private static Reader instance = new Reader();
-
-    // 3. Singleton accessor method
-    public static Reader getInstance() {
-	return instance;
+    
+    public void Read(String fName) {
+	l.trackRead(fName);
     }
     
 }

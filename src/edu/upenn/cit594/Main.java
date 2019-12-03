@@ -21,7 +21,7 @@ public class Main {
 	
 	// get an instance of UserInput, Reader, Processor, Presenter and logger 
 	UserInput uI = UserInput.getInstance();
-	Reader read = Reader.getInstance(); 
+	Reader read = new Reader(); 
 	Processor ps = Processor.getInstance();	
 	Logger l = Logger.getInstance();
 	Presenter p = Presenter.getInstance();

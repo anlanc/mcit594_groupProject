@@ -1,5 +1,4 @@
 package edu.upenn.cit594.ui;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
@@ -8,8 +7,7 @@ import edu.upenn.cit594.processor.Processor;
 
 /* 1. Handle printing the output to the screen */
 
-public class Presenter {
-    ArrayList<String> impactSummary;  
+public class Presenter {  
     UserInput ui;
     Processor p;
     
