@@ -1,41 +1,33 @@
 package edu.upenn.cit594;
-/* 1. reading the runtime arguments / handle input through command
- * 2. creating all the objects, arranging the dependencies between modules
- */
-import edu.upenn.cit594.datamanagement.Reader;
-import edu.upenn.cit594.logging.Logger;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
+import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
+import edu.upenn.cit594.datamanagement.ParkingViolationFileReader;
+import edu.upenn.cit594.datamanagement.ParkingViolationJSONReader;
+import edu.upenn.cit594.datamanagement.PopulationFileReader;
+import edu.upenn.cit594.datamanagement.PropertyValueFileReader;
 import edu.upenn.cit594.processor.Processor;
-import edu.upenn.cit594.ui.Presenter;
 import edu.upenn.cit594.ui.UserInput;
 
-public class Main {
-    
-    public static void main(String[] args) {
+
+public class Main  {
+	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
+	// simple test 
+	PopulationFileReader popRd = new PopulationFileReader("population.txt");	
+	ParkingViolationFileReader prkRd;
+	/** if... csv, new csvReader....else.. json reader **/
+	//prkRd = new ParkingViolationCSVReader("parking.csv");	
+	prkRd = new ParkingViolationJSONReader("parking.json");
+	PropertyValueFileReader pptRd = new PropertyValueFileReader("properties.csv");
 	
-	/* Note : For test purpose + copy and paste this to command / program arguments 
-	String[] args1 = {"CSV","parking.csv","properties.csv","population.txt","log.txt"};  
-	args = args1;
-	String[] args2 = {"JSON","parking.json","properties.csv","population.txt","log.txt"};
-	args = args2;
-	*/
-	
-	// get an instance of UserInput, Reader, Processor, Presenter and logger 
-	UserInput uI = UserInput.getInstance();
-	Reader read = new Reader(); 
-	Processor ps = Processor.getInstance();	
-	Logger l = Logger.getInstance();
-	Presenter p = Presenter.getInstance();
-	
-	// While loop to receive instructions and act upon.	
-	Boolean running = uI.checkInput(args);
-	l.generateFile(args);
-	while(running) {
-	    running = uI.checkInput();
-	    l.trackUI();
-	    if (running) {
-		p.answer();
-	    }
+	Processor processor = new Processor(popRd,prkRd,pptRd);
+	UserInput ui = new UserInput(processor);
+	ui.start("log.txt");
+
+
 	}
-	
-    }
 }
