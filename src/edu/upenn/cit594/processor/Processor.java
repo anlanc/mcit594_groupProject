@@ -57,8 +57,10 @@ public class Processor {
 		mvRecordMap = new HashMap<>();
 	}
 	
+	/* Processing/Filtering data sore in MAP */
+
 	/** This method process the List of Population 
-	 ** Store in/Update the popMap w/ key:zipcode, values:List<Population>
+	 ** Store in/Update the popMap w/ key:zipcode, values:population
 	 * @param pops
 	 * @return 
 	 */
@@ -226,7 +228,7 @@ public class Processor {
 	 *  
 	 */
 	private int getTotalFinesAtZip(int zipCode,  List<ParkingViolation> violationsAtZip) {
-		if(zipCode < 9999) { // have to be 5 digits
+		if(zipCode < 9999) { // have to be 5 digits to be considered valid
 			System.out.println("Error in getTotalFinesAtZip(): invalid zip code");
 			return -1 ;
 		}
@@ -263,8 +265,8 @@ public class Processor {
 	 * @return average residential market value
 	 */
 	public int getAveResMV(int zipCode) {
-		mvRecordMap.putAll(tempRecordMap);
-		tempRecordMap.clear();
+		mvRecordMap.putAll(tempRecordMap); // memorization implemented, total market values store for Q5
+		tempRecordMap.clear(); // clear temp map for future use
 		return calAveRes(zipCode, new MVRetriever());
 	}
 	
@@ -274,7 +276,7 @@ public class Processor {
 	 * @param zipCode
 	 * @return average residential total livable area
 	 */
-	public int getAveResTLA(int zipCode) {		
+	public int getAveResTLA(int zipCode) {	
 		return calAveRes(zipCode, new TLARetriever());
 	}
 	/**
