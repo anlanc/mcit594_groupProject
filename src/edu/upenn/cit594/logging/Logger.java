@@ -23,8 +23,6 @@ public class Logger {
     
     /* Singleton */
     private Logger() {
-	pr = Processor.getInstance();
-	ui = UserInput.getInstance();
     }
 
     private static Logger instance = new Logger();
@@ -82,13 +80,16 @@ public class Logger {
      * enters a ZIP Code in Step #3, 4, or 5, the program should write the current
      * time and the specified ZIP Code to the log file.
      */
-    public void trackUI() {
+    public void trackUI(int choice, int zip) {
 	pw.print(System.currentTimeMillis()+" ");
-	pw.print(ui.getCurrentChoice()+" ");
-	int zip = ui.getCurrentZip();
+	pw.print(choice+" ");
 	if (zip!=99999) {
-	    pw.println(zip+" ");
+	    pw.println(zip+" \n");
 	}
+    }
+    
+    public void trackUI(String invalidInput) {
+	pw.println(invalidInput+" \n");
     }
 
     /* close the file writer and print writer */
@@ -101,6 +102,11 @@ public class Logger {
 	}
     }
 
+    /* close the file writer and print writer */
+    public void set_Processor_UI(Processor p, UserInput ui ) {
+	this.pr = p;
+	this.ui = ui;
+    }
 
 
 }
