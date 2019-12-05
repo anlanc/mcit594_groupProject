@@ -9,7 +9,8 @@ import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 
 public class UserInput {
-	protected Processor processor;
+	public Processor processor;
+	public Logger l;
 	public UserInput(Processor processor) {
 		this.processor = processor;
 		
@@ -22,7 +23,14 @@ public class UserInput {
 	 * 
 	 */
 	public void start(String logFilename) {	
-		Logger l = Logger.getInstance(logFilename);		
+		// per M11 assignment feed back
+		// 0/3 - Logger instance is initialized every time getInstance() is called; but the Logger instance 
+		// should only be initialized once when following the Singleton design pattern. You can do this by, 
+		// for example, checking if instance == null before initializing and returning.
+		if(l == null) {
+			l= Logger.getInstance(logFilename);	
+		}
+		
 		l.log(); //testing, argument TBD
 		
 		/* Simply testing with processor function */
