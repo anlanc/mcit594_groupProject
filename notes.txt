@@ -54,3 +54,6 @@ Q4: getAveResTLA(19131) --- 2548
 Q5: getTotalResMVperCap(19131) --- 66222
 
 Current reading and processing takes about 8~9s
+Current logger.log()function takes no argument, just printing out a testing
+Current UserInput class: no UI implemented, simply testing 
+Current Main class: no error handling simply testing
