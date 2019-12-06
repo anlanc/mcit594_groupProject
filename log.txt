@@ -1,3 +1,23 @@
 1575537495063 csv parking.csv properties_s.csv population.txt log.txt
 0 
 
+1575670463598 csv parking.csv properties_s.csv population.txt log.txt
+1575670469871 3 4 
+
+1575670472445 3 1104 
+
+1575670474976 3 11104 
+
+1575670477081 3 19104 
+
+0 
+
+1575670594691 csv parking.csv properties_s.csv population.txt log.txt
+1575670599503 3 0 
+
+1575670601921 3 11 
+
+1575670603227 3 19104 
+
+1575670604183 0 
+

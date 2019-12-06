@@ -89,6 +89,7 @@ public class Logger {
     }
     
     public void trackUI(String invalidInput) {
+	pw.print(System.currentTimeMillis()+" ");
 	pw.println(invalidInput+" \n");
     }
 
