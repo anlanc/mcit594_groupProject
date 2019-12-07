@@ -173,14 +173,17 @@ public class UserInput {
 	
     /* H3 - Print welcome message */ 
     private void welcomeMessage() {
-	System.out.println("Welcome! Please specify the action to be performed by typing a single digit number range from 0 to 6 :");
+	System.out.println("Welcome! Please specify the action to be performed by typing a single digit number ranges from 0 to 6 :");
 	System.out.println("\t0 - exit;");
 	System.out.println("\t1 - total population for all ZIP Codes;");
 	System.out.println("\t2 - total parking fines per capita for each ZIP Code;");
 	System.out.println("\t3 - average market value for residences in a specified ZIP Code;");
 	System.out.println("\t4 - total livable area for residences in a specified ZIP Code;");
 	System.out.println("\t5 - total residential market value per capita for a specified ZIP Code;");
-	System.out.println("\t6 - rank of parking fines per capita and rank of avergae market value of a specified ZIP Code;");
+	System.out.println("\t6 - top10 zipcodes with the highest parking fines per capita and their rank of housing affordability;");
+	
+	System.out.println("\n*** please allow some time for preparing the data...");
+	System.out.println("*** data processing...");
     }
     
     /* H4 - Getter for the current choice */
