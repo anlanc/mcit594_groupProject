@@ -306,7 +306,7 @@ public class Processor {
 	}
 	
 	/**
-	 * helper method for Q3, Q4, Q5: Strategy Design Pattern implemented
+	 * helper method for Q3, Q4, Q5, Q6: Strategy Design Pattern implemented
 	 * calculate total residential data per zipcode
 	 * @param zipCode
 	 * @param dataRetriever
