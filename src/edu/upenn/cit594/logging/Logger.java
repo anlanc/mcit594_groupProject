@@ -71,7 +71,7 @@ public class Logger {
      */
     public void trackRead(String fName) {
 	 pw.print(System.currentTimeMillis());
-	 pw.println(fName);
+	 pw.println(" "+fName);
     }
     
     /*
@@ -84,7 +84,7 @@ public class Logger {
 	pw.print(System.currentTimeMillis()+" ");
 	pw.print(choice+" ");
 	if (zip!=99999) {
-	    pw.println(zip+" \n");
+	    pw.println(zip+"");
 	}
     }
     

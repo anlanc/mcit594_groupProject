@@ -27,7 +27,7 @@ public class Main {
 	args = args2;
 	*/
 	
-	String[] args1 = {"csv","parking.csv","properties_s.csv","population.txt","log.txt"};  
+	String[] args1 = {"json","parking.json","properties_s.csv","population.txt","log.txt"};  
 	args = args1;
 	
 	// initialize ui and valid run time arguments	
@@ -35,9 +35,19 @@ public class Main {
 	Boolean running = ui.checkInput(args);	
 	if (!running) return;	
 	
-	// initialize readers 
-	PopulationFileReader popRd = new PopulationFileReader(args[3]);		
+	// initialize logger
+	Logger l = Logger.getInstance();
+	l.setFileName(args[4]);		
+	l.generateFile(args);
+	
+	// initialize readers
+	l.trackRead(args[3]);
+	PopulationFileReader popRd = new PopulationFileReader(args[3]);	
+	
+	l.trackRead(args[2]);
 	PropertyValueFileReader pptRd = new PropertyValueFileReader(args[2]);
+	
+	l.trackRead(args[1]);
 	ParkingViolationFileReader prkRd;
 	if (args[0].compareTo("csv")==0) {
 	    prkRd = new ParkingViolationCSVReader(args[1]);
@@ -48,11 +58,6 @@ public class Main {
 	// initialize processor and pass back to ui
 	Processor processor = new Processor(popRd,prkRd,pptRd);	
 	ui.setProcessor(processor);
-	
-	// initialize logger
-	Logger l = Logger.getInstance();
-	l.setFileName(args[4]);		
-	l.generateFile(args);
 	ui.checkInput();
 	
 	// close logger before exist

@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.PrimitiveIterator.OfDouble;
 
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
@@ -155,7 +154,7 @@ public class UserInput {
     				break;
     			    }
     			    else {
-    				l.trackUI(choice, zip);
+    				if (choice!=6) l.trackUI(choice, zip);
     				System.out.print("Invalid zipcode. ");
     			    }
     			} else {
