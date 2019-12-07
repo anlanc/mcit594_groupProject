@@ -379,7 +379,6 @@ public class Processor {
 	 */
 
 	public String[] getRank() {
-	    rank();
 	    return rankedZip;
 	}
 	
