@@ -414,8 +414,15 @@ public class Processor {
 	    class AverageFineCompare implements Comparator<Integer> {
 		    public int compare(Integer zip1, Integer zip2) {
 			double fpp1 = 0, fpp2 = 0;			
-			if (prkMap.get(zip1).size()!=0) {fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size();}
-			if (prkMap.get(zip2).size()!=0) {fpp2 = prkFineTotal.get(zip2)/prkMap.get(zip2).size();}
+			
+			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
+			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
+			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 			
+			
+			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
+			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
+			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 	
+			
 		        return (int) (fpp1 - fpp2);
 		    }
 	    }

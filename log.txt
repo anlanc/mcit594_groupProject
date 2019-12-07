@@ -6,3 +6,9 @@
 1575748650162 5 19104
 1575748654249 0 
 
+1575754196564 json parking.json properties_s.csv population.txt log.txt
+1575754196564 population.txt
+1575754196565 properties_s.csv
+1575754196566 parking.json
+1575754210843 0 
+
