@@ -158,14 +158,15 @@ public class UserInput {
     			    input = in.nextLine();
     			    if (!isNumeric(input)) {
     			    l.trackUI(input);
-    			    System.out.println("Invalid input please input a single digit number range from 0 to 6.");
+    			    System.out.println("0");
+    			    break;
     			    } else {
-    			    zip = in.nextInt();
+    			    zip = Integer.parseInt(input);
  //   			    if (p.zipcodePA(zip)) {
     				l.trackUI(choice, zip);
     				answer();
     				break;
-    			    }
+    			    } 
  //   			    }
  //   			    else {
  //   				if (choice!=6) l.trackUI(choice, zip);

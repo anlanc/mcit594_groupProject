@@ -34,7 +34,7 @@ public class Main {
 	UserInput ui = new UserInput();
 	Boolean running = ui.checkInput(args);	
 	if (!running) return;	
-	
+	  
 	// initialize logger
 	Logger l = Logger.getInstance();
 	l.setFileName(args[4]);		
@@ -60,7 +60,7 @@ public class Main {
 	ui.setProcessor(processor);
 	ui.checkInput();
 	
-	// close logger before exist
+	// close logger before exist 
 	l.done();
     }
 }

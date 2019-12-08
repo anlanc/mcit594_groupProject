@@ -73,7 +73,7 @@ public class Logger {
 	 pw.print(System.currentTimeMillis());
 	 pw.println(" "+fName);
     }
-    
+     
     /*
      * When the user makes a choice from the prompt in Step #0, the program should
      * write the current time and the user’s selection to the log file. If the user

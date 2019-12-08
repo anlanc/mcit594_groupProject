@@ -21,7 +21,7 @@ public class Processor {
 	private ArrayList<Population> pops;
 	private ArrayList<ParkingViolation> violations;
 	private ArrayList<PropertyValue> values;
-	
+	 
 	public Map<Integer, Integer> popMap;
 	public Map<Integer, List<ParkingViolation>> prkMap;
 	public Map<Integer, List<PropertyValue>> pptMap;
