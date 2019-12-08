@@ -426,10 +426,13 @@ public class Processor {
 		    }
 	    }
 	    
-	/* Helper for ui */
-	public boolean zipcodePA(int zipcode) {
-		return popMap.keySet().contains((Integer)zipcode);		    
-	}
+		/* Helper for ui */
+		public boolean zipcodePA(int zipcode) {		    
+		    boolean validity = false;
+		    validity = (popMap.containsKey(zipcode) & pptMap.containsKey(zipcode));
+		    return validity;
+		}
+		
 	//	test
 //	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
 //		// TODO Auto-generated method stub
