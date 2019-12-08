@@ -404,9 +404,9 @@ public class Processor {
 		if(popMap == null || popMap.isEmpty()) {
 			processPop(pops);
 		}
-		if((!popMap.containsKey(zipCode)) || popMap.get(zipCode) == 0) {
-			return 0;
-		}
+//		if((!popMap.containsKey(zipCode)) || popMap.get(zipCode) == 0) {
+//			return 0;
+//		}
 		
 		if(popMap.get(zipCode) != null){
 			return (int)(sum/popMap.get(zipCode));
