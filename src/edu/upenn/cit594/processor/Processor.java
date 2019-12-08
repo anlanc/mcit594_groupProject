@@ -286,8 +286,8 @@ public class Processor {
 	 * @return average residential market value
 	 */
 	public int getAveResMV(int zipCode) {
-		//mvRecordMap.putAll(tempRecordMap); // memorization implemented, total market values store for Q5
-		//tempRecordMap.clear(); // clear temp map for future use
+		// memorization implemented, total market values store for Q5
+		
 		double sum = 0;
 		/* memorization */
 		// keep an key: zipcode - value:sum RecordMap
@@ -298,8 +298,16 @@ public class Processor {
 			sum = calSumRes(zipCode, new MVRetriever());
 			mvRecordMap.put(zipCode, sum);
 		}
-		// truncated to an int
-		return (int)(sum/pptMap.get(zipCode).size());
+		
+		if(pptMap.get(zipCode) != null) {
+			// truncated to an int
+			return (int)(sum/pptMap.get(zipCode).size());
+		}
+		else {
+			return 0;
+		}
+		
+		
 	}
 	
 	
@@ -319,8 +327,14 @@ public class Processor {
 			sum = calSumRes(zipCode, new TLARetriever());
 			tlaRecordMap.put(zipCode, sum);
 		}
-		// truncated to an int
-		return (int)(sum/pptMap.get(zipCode).size());
+		if(pptMap.get(zipCode) != null) {
+			// truncated to an int
+			return (int)(sum/pptMap.get(zipCode).size());
+		}
+		else {
+			return 0;
+		}
+
 		
 	}
 	/**
@@ -393,7 +407,14 @@ public class Processor {
 		if((!popMap.containsKey(zipCode)) || popMap.get(zipCode) == 0) {
 			return 0;
 		}
-		return (int)(sum/popMap.get(zipCode));
+		
+		if(popMap.get(zipCode) != null){
+			return (int)(sum/popMap.get(zipCode));
+		}
+		else {
+			return 0;
+		}
+		
 	}
 
 	
@@ -480,7 +501,8 @@ public class Processor {
 	    
 	/* Helper for ui */
 //	public boolean zipcodePA(int zipcode) {
-//	    return popMap.keySet().contains((Integer)zipcode);		    
+//	    return popMap.keySet().contains((Integer)zipcode);	
+//	    
 //	}
 	//	test
 //	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
