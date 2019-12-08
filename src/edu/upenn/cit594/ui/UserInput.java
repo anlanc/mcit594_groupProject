@@ -133,9 +133,13 @@ public class UserInput {
 	boolean running = true;
 	do {
 	    System.out.println("\nPlease specify the action to be performed by typing a single digit number range from 0 to 6 :");
-	    if (in.hasNextInt()) {	    
-    		choice = in.nextInt();
-    		
+	    if (in.hasNextLine()) {	  
+		String input = in.nextLine();
+		if (!isNumeric(input)) {
+		    l.trackUI(input);
+		    System.out.println("Invalid input please input a single digit number range from 0 to 6.");
+		}    		
+		else { choice = Integer.parseInt(input);
     		if (choice == 0) {
     		    l.trackUI("0");
     		    break;
@@ -145,18 +149,23 @@ public class UserInput {
     		    System.out.println("Invalid input please input a single digit number range from 0 to 6.");
     		} 
     		
-    		// Where zip code needed 
-    		
+    		// Where zip code needed     		
     		else if ((choice>=3)&(choice<6)){
     		    boolean zipValid = false;
     		    do {
     			System.out.println("For #"+choice+" , please provide the five digits zip code in PA to look up for :");
-    			if (in.hasNextInt()) {
+    			if (in.hasNextLine()) {
+    			    input = in.nextLine();
+    			    if (!isNumeric(input)) {
+    			    l.trackUI(input);
+    			    System.out.println("Invalid input please input a single digit number range from 0 to 6.");
+    			    } else {
     			    zip = in.nextInt();
  //   			    if (p.zipcodePA(zip)) {
     				l.trackUI(choice, zip);
     				answer();
     				break;
+    			    }
  //   			    }
  //   			    else {
  //   				if (choice!=6) l.trackUI(choice, zip);
@@ -169,11 +178,23 @@ public class UserInput {
     		    } while (!zipValid);
     	    	}    		
     		else answer();
+		}
     	    } else {
     		System.out.print("Invalid input. ");
     		l.trackUI(in.next());
     	    }
 	} while (running) ;
+    }
+    
+    /* H2 - See if numeric */
+    public static boolean isNumeric(String str) { 
+	str = str.replace(' ', 's');
+	  try {  
+	    Double.parseDouble(str);  
+	    return true;
+	  } catch(NumberFormatException e){  
+	    return false;  
+	  }  
     }
 	
     /* H3 - Print welcome message */ 
