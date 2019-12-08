@@ -5,11 +5,9 @@ import java.util.*;
 
 import org.json.simple.parser.ParseException;
 
-import apple.laf.JRSUIConstants.Size;
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.Population;
 import edu.upenn.cit594.data.PropertyValue;
-import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationFileReader;
 import edu.upenn.cit594.datamanagement.PopulationFileReader;
 import edu.upenn.cit594.datamanagement.PropertyValueFileReader;
@@ -447,9 +445,9 @@ public class Processor {
 	    class HousingAffordanilityCompare implements Comparator<Integer> {
 		    public int compare(Integer zip1, Integer zip2) {
 			int ha1 = 0, ha2 = 0;
-			if (getAveResTLA(zip1)!=0) ha1 = getAveResMV(zip1)/getAveResTLA(zip1);
-			if (getAveResTLA(zip2)!=0) ha2 = getAveResMV(zip2)/getAveResTLA(zip2);
-			return ha1-ha2;
+			if ((zip1>9999)& (getAveResTLA(zip1)!=0)) ha1 = getAveResMV(zip1)/getAveResTLA(zip1);
+			if ((zip2>9999)&(getAveResTLA(zip2)!=0)) ha2 = getAveResMV(zip2)/getAveResTLA(zip2);
+			return ha2-ha1;
 		    }
 		}
 	    
@@ -458,15 +456,15 @@ public class Processor {
 		    public int compare(Integer zip1, Integer zip2) {
 			double fpp1 = 0, fpp2 = 0;			
 			
-			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
+			if (((zip1>9999))&(prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
 			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
 			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 			
 			
-			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
+			if ((zip2>9999)&(prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
 			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
 			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 	
 			
-		        return (int) (fpp1 - fpp2);
+		        return (int) (fpp2 - fpp1);
 		    }
 	    }
 	    
