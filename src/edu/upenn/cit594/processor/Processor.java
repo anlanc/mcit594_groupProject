@@ -415,8 +415,8 @@ public class Processor {
 		if(pptMap == null || pptMap.isEmpty()) {
 			processPpt(values);
 		}
-	    ArrayList<Integer> sortByHousingAffordability = new ArrayList<Integer>(pptMap.keySet());
-	    ArrayList<Integer> sortByAvgFine = new ArrayList<Integer>(pptMap.keySet());
+	    ArrayList<Integer> sortByHousingAffordability = new ArrayList<Integer>(prkMap.keySet());
+	    ArrayList<Integer> sortByAvgFine = new ArrayList<Integer>(prkMap.keySet());
 	    
 	    Collections.sort(sortByHousingAffordability, new HousingAffordanilityCompare());
 	    Collections.sort(sortByAvgFine, new AverageFineCompare());
