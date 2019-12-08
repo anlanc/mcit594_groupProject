@@ -29,7 +29,8 @@ public class Processor {
 	/* memorization map */
 	public Map<Integer, Double> tlaRecordMap;
 	public Map<Integer, Double> mvRecordMap;
-	
+	public Map<Integer, Double> totalFinesperCap;
+
 	/* Rank */ /* data structure for Q6 */
 	public Map<Integer, Double> prkFineTotal;
 	public String[] rankedZip;
@@ -55,6 +56,7 @@ public class Processor {
 		processPop(pops);
 		processPpt(values);
 		processPrk(violations);		
+		getTotalFinesperCap();
 		
 		/* memorization map and list */
 		//tempRecordMap = new HashMap<>();
@@ -199,7 +201,9 @@ public class Processor {
 	 * @return null if either of the map is empty after processing data
 	 */
 	public TreeMap<Integer, Double> getTotalFinesperCap(){
-		
+		if (totalFinesperCap!=null) {
+		  // do nothing   
+		} else {
 		// populate the popMap if haven't
 		if(popMap == null || popMap.isEmpty()) {
 			processPop(pops);					
@@ -213,7 +217,7 @@ public class Processor {
 //		System.out.println("prkMap.size() = " + prkMap.size());
 		if(popMap.size() == 0 || prkMap.size() == 0) return null;
 		
-		Map<Integer, Double> totalFinesperCap = new HashMap<>();
+		totalFinesperCap = new HashMap<>();
 		// loop over prkMap.keySet()
 		for(Integer zip: prkMap.keySet()) {
 			// get total fines in this zipCode area
@@ -232,6 +236,7 @@ public class Processor {
 				}				
 			}
 		}
+		} 
 		return new TreeMap<Integer, Double>(totalFinesperCap);
 	}
 	
@@ -406,7 +411,7 @@ public class Processor {
 	 * Helper method for Q6;
 	 */
 	private void rank() {	
-		updatePrkFineTotal(); 
+//		updatePrkFineTotal(); 
 		// populate the popMap if haven't
 		if(popMap == null || popMap.isEmpty()) {
 			processPop(pops);					
@@ -419,9 +424,9 @@ public class Processor {
 	    ArrayList<Integer> sortByAvgFine = new ArrayList<Integer>(prkMap.keySet());
 	    
 	    Collections.sort(sortByHousingAffordability, new HousingAffordanilityCompare());
-	    Collections.sort(sortByAvgFine, new AverageFineCompare());
+	    Collections.sort(sortByAvgFine, new FineperCapCompare());
 	    
-	    rankedZip[0]="Housing Affordability Rank   "+"Zip Code"+"\t"+"Avg Fine Rank";
+	    rankedZip[0]="Housing Affordability Rank   "+"Zip Code"+"\t"+"Avg Fine per Person";
 	    for (int i = 1; i < 11 ; i++) {
 	    	int zipcode = sortByHousingAffordability.get(i-1);
 	    	rankedZip[i] = ""+i+"\t\t\t     "+zipcode+"\t"+(1+sortByAvgFine.indexOf(zipcode));
@@ -430,6 +435,7 @@ public class Processor {
 	/**
 	 * Helper method for Q6, update parkFineTotal map
 	 */
+/*	
 	private void updatePrkFineTotal(){
 		if(prkMap == null || prkMap.isEmpty()) {
 			processPrk(violations);			
@@ -439,32 +445,36 @@ public class Processor {
 		}
 		
 	}	
-		
-	
+*/	
 	    /* 	q6 helper, used to sort zipcode by house affordability */	
 	    class HousingAffordanilityCompare implements Comparator<Integer> {
 		    public int compare(Integer zip1, Integer zip2) {
 			int ha1 = 0, ha2 = 0;
-			if ((zip1>9999)& (getAveResTLA(zip1)!=0)) ha1 = getAveResMV(zip1)/getAveResTLA(zip1);
-			if ((zip2>9999)&(getAveResTLA(zip2)!=0)) ha2 = getAveResMV(zip2)/getAveResTLA(zip2);
+			if ((getAveResTLA(zip1)!=0)) ha1 = getAveResMV(zip1)/getAveResTLA(zip1);
+			if ((getAveResTLA(zip2)!=0)) ha2 = getAveResMV(zip2)/getAveResTLA(zip2);
 			return ha2-ha1;
 		    }
 		}
 	    
-	    /* 	q6 helper, used to sort zipcode by average fine*/
-	    class AverageFineCompare implements Comparator<Integer> {
+	    /* 	q6 helper, used to sort zipcode by average fine per person*/
+	    class FineperCapCompare implements Comparator<Integer> {
 		    public int compare(Integer zip1, Integer zip2) {
-			double fpp1 = 0, fpp2 = 0;			
+			double fpp1 = 0.0, fpp2 = 0.0;			
+			/*
+			if ((popMap.containsKey(zip1)==false)|(prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
+			else if (popMap.get(zip1)==0) fpp1 = 0;
+			else fpp1 = prkFineTotal.get(zip1)/popMap.get(zip1); 	
+			System.out.print(""+zip1);
+			System.out.print("fine : "+prkFineTotal.get(zip1));			
+			System.out.println("pop : "+popMap.get(zip1));
 			
-			if (((zip1>9999))&(prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
-			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
-			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 			
-			
-			if ((zip2>9999)&(prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
-			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
-			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 	
-			
-		        return (int) (fpp2 - fpp1);
+			if ((popMap.containsKey(zip2)==false)|(prkFineTotal.containsKey(zip2)==false)) fpp2 = 0;
+			else if (popMap.get(zip2)==0) fpp2 = 0;
+			else fpp2 = prkFineTotal.get(zip1)/popMap.get(zip2); 	
+			*/
+			if (totalFinesperCap.containsKey(zip1)) fpp1 = totalFinesperCap.get(zip1);
+			if (totalFinesperCap.containsKey(zip2)) fpp2 = totalFinesperCap.get(zip2);
+		        return (int) (fpp2*1000 - fpp1*1000);
 		    }
 	    }
 	    
