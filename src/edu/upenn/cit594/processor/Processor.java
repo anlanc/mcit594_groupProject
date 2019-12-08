@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.json.simple.parser.ParseException;
 
-import apple.laf.JRSUIConstants.Size;
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.Population;
 import edu.upenn.cit594.data.PropertyValue;
@@ -13,7 +12,10 @@ import edu.upenn.cit594.datamanagement.ParkingViolationCSVReader;
 import edu.upenn.cit594.datamanagement.ParkingViolationFileReader;
 import edu.upenn.cit594.datamanagement.PopulationFileReader;
 import edu.upenn.cit594.datamanagement.PropertyValueFileReader;
-
+/**
+ * @author anlanchen
+ *
+ */
 public class Processor {
 
 	public PopulationFileReader popFileReader;
@@ -32,9 +34,6 @@ public class Processor {
 	public Map<Integer, Double> tempRecordMap;
 	public Map<Integer, Double> mvRecordMap;
 	
-	/* Rank */
-	public Map<Integer, Double> prkFineTotal;
-	public String[] rankedZip;
 	
 	public Processor(PopulationFileReader popFileReader, ParkingViolationFileReader prkFileReader,
 			PropertyValueFileReader pptFileReader) throws FileNotFoundException, ParseException, IOException {
@@ -47,29 +46,19 @@ public class Processor {
 		pops = popFileReader.ReadFromFile();
 		violations = prkFileReader.ReadFromFile();
 		values = pptFileReader.ReadFromFile();
-
+		
 		// initialize the map for data process/filtering
 		popMap = new HashMap<Integer, Integer>();
 		prkMap = new HashMap<Integer, List<ParkingViolation>>();
 		pptMap = new HashMap<Integer, List<PropertyValue>>();
 		
-		/* memorization map and list */
+		/* memorization map */
 		tempRecordMap = new HashMap<>();
 		mvRecordMap = new HashMap<>();
-		prkFineTotal = new HashMap<>();
-				
-		/* process */	
-		processPop(pops);
-		processPpt(values);
-		processPrk(violations);
-		rankedZip = new String[11];
-		rank();
 	}
 	
-	/* Processing/Filtering data sore in MAP */
-
 	/** This method process the List of Population 
-	 ** Store in/Update the popMap w/ key:zipcode, values:population
+	 ** Store in/Update the popMap w/ key:zipcode, values:List<Population>
 	 * @param pops
 	 * @return 
 	 */
@@ -108,13 +97,11 @@ public class Processor {
 				ArrayList<ParkingViolation> violationsInZip = new ArrayList<>();
 				violationsInZip.add(prk);
 				prkMap.put(zip, violationsInZip);
-				prkFineTotal.put(zip, prk.getFine()*1.0);
 			}
 			else { // if key exist
 				// update the corresponding list
 				prkMap.get(zip).add(prk);			
-				double newSubTotal = prkFineTotal.get(zip) + prk.getFine();
-				prkFineTotal.put(zip, newSubTotal);
+				
 			}						
 		}
 	}
@@ -141,7 +128,7 @@ public class Processor {
 			
 			// key: zip
 			// value: valuesInZip
-			int zip = ppt.getZipCode();	
+			int zip = ppt.getZipCode();			
 			if(!pptMap.containsKey(zip)) {// if key not found
 				// create a list to store values in this zipCode
 				ArrayList<PropertyValue> valuesInZip = new ArrayList<>();
@@ -239,7 +226,7 @@ public class Processor {
 	 *  
 	 */
 	private int getTotalFinesAtZip(int zipCode,  List<ParkingViolation> violationsAtZip) {
-		if(zipCode < 9999) { // have to be 5 digits to be considered valid
+		if(zipCode < 9999) { // have to be 5 digits
 			System.out.println("Error in getTotalFinesAtZip(): invalid zip code");
 			return -1 ;
 		}
@@ -276,8 +263,8 @@ public class Processor {
 	 * @return average residential market value
 	 */
 	public int getAveResMV(int zipCode) {
-		mvRecordMap.putAll(tempRecordMap); // memorization implemented, total market values store for Q5
-		tempRecordMap.clear(); // clear temp map for future use
+		mvRecordMap.putAll(tempRecordMap);
+		tempRecordMap.clear();
 		return calAveRes(zipCode, new MVRetriever());
 	}
 	
@@ -287,7 +274,7 @@ public class Processor {
 	 * @param zipCode
 	 * @return average residential total livable area
 	 */
-	public int getAveResTLA(int zipCode) {	
+	public int getAveResTLA(int zipCode) {		
 		return calAveRes(zipCode, new TLARetriever());
 	}
 	/**
@@ -306,7 +293,7 @@ public class Processor {
 	}
 	
 	/**
-	 * helper method for Q3, Q4, Q5, Q6: Strategy Design Pattern implemented
+	 * helper method for Q3, Q4, Q5: Strategy Design Pattern implemented
 	 * calculate total residential data per zipcode
 	 * @param zipCode
 	 * @param dataRetriever
@@ -373,66 +360,7 @@ public class Processor {
 	}
 
 	
-	/**
-	 * Solution to Q6
-	 * @return Rank of total fines per cap vs Rank of AveResMV   
-	 */
-
-	public String[] getRank() {
-	    return rankedZip;
-	}
 	
-	/**
-	 * Helper method for Q6;
-	 */
-	private void rank() {	
-	    ArrayList<Integer> sortByHousingAffordability = new ArrayList<Integer>(pptMap.keySet());
-	    ArrayList<Integer> sortByAvgFine = new ArrayList<Integer>(pptMap.keySet());
-	    
-	    Collections.sort(sortByHousingAffordability, new HousingAffordanilityCompare());
-	    Collections.sort(sortByAvgFine, new AverageFineCompare());
-	    
-	    rankedZip[0]="Housing Affordability Rank   "+"Zip Code"+"\t"+"Avg Fine Rank";
-	    for (int i = 1; i < 11 ; i++) {
-		int zipcode = sortByHousingAffordability.get(i-1);
-		rankedZip[i] = ""+i+"\t\t\t     "+zipcode+"\t"+(1+sortByAvgFine.indexOf(zipcode));
-	    }	
-	}
-
-	    /* 	q6 helper, used to sort zipcode by house affordability */	
-	    class HousingAffordanilityCompare implements Comparator<Integer> {
-		    public int compare(Integer zip1, Integer zip2) {
-			int ha1 = 0, ha2 = 0;
-			if (getAveResTLA(zip1)!=0) ha1 = getAveResMV(zip1)/getAveResTLA(zip1);
-			if (getAveResTLA(zip2)!=0) ha2 = getAveResMV(zip2)/getAveResTLA(zip2);
-			return ha1-ha2;
-		    }
-		}
-	    
-	    /* 	q6 helper, used to sort zipcode by average fine*/
-	    class AverageFineCompare implements Comparator<Integer> {
-		    public int compare(Integer zip1, Integer zip2) {
-			double fpp1 = 0, fpp2 = 0;			
-			
-			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
-			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
-			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 			
-			
-			if ((prkMap.containsKey(zip1)==false) | (prkFineTotal.containsKey(zip1)==false)) fpp1 = 0;
-			else if (prkMap.get(zip1).size()!=0) fpp1 = 0;
-			else fpp1 = prkFineTotal.get(zip1)/prkMap.get(zip1).size(); 	
-			
-		        return (int) (fpp1 - fpp2);
-		    }
-	    }
-	    
-		/* Helper for ui */
-		public boolean zipcodePA(int zipcode) {		    
-		    boolean validity = false;
-		    validity = (popMap.containsKey(zipcode) & pptMap.containsKey(zipcode));
-		    return validity;
-		}
-		
 	//	test
 //	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
 //		// TODO Auto-generated method stub
