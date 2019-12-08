@@ -479,9 +479,9 @@ public class Processor {
 	    }
 	    
 	/* Helper for ui */
-	public boolean zipcodePA(int zipcode) {
-	    return popMap.keySet().contains((Integer)zipcode);		    
-	}
+//	public boolean zipcodePA(int zipcode) {
+//	    return popMap.keySet().contains((Integer)zipcode);		    
+//	}
 	//	test
 //	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
 //		// TODO Auto-generated method stub
