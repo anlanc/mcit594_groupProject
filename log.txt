@@ -24,3 +24,9 @@
 1575758783376 5 19131
 1575758812406 0 
 
+1575771349448 csv parking.csv properties_s.csv population.txt log.txt
+1575771349449 population.txt
+1575771349449 properties_s.csv
+1575771349450 parking.csv
+1575771352985 0 
+

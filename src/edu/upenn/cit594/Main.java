@@ -27,7 +27,7 @@ public class Main {
 	args = args2;
 	*/
 	
-	String[] args1 = {"csv","parking.csv","properties.csv","population.txt","log.txt"};  
+	String[] args1 = {"csv","parking.csv","properties_s.csv","population.txt","log.txt"};  
 	args = args1;
 	
 	// initialize ui and valid run time arguments	

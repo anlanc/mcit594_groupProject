@@ -185,7 +185,7 @@ public class UserInput {
 	System.out.println("\t3 - average market value for residences in a specified ZIP Code;");
 	System.out.println("\t4 - total livable area for residences in a specified ZIP Code;");
 	System.out.println("\t5 - total residential market value per capita for a specified ZIP Code;");
-	System.out.println("\t6 - rank of parking fines per capita and rank of avergae market value of a specified ZIP Code;");
+	System.out.println("\t6 - top10 zipcodes with the highest parking fines per capita and their ranks of housing affordability;");
 	System.out.println();
 	System.out.println("*** please allow some time for preparing the data...");
 	

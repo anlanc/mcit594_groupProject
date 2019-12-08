@@ -472,7 +472,7 @@ public class Processor {
 	    
 	/* Helper for ui */
 	public boolean zipcodePA(int zipcode) {
-		return popMap.keySet().contains((Integer)zipcode);		    
+	    return popMap.keySet().contains((Integer)zipcode);		    
 	}
 	//	test
 //	public static void main(String[] args) throws FileNotFoundException, ParseException, IOException {
