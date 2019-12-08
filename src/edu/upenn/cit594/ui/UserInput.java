@@ -153,15 +153,15 @@ public class UserInput {
     			System.out.println("For #"+choice+" , please provide the five digits zip code in PA to look up for :");
     			if (in.hasNextInt()) {
     			    zip = in.nextInt();
-    			    if (p.zipcodePA(zip)) {
+ //   			    if (p.zipcodePA(zip)) {
     				l.trackUI(choice, zip);
     				answer();
     				break;
-    			    }
-    			    else {
-    				if (choice!=6) l.trackUI(choice, zip);
-    				System.out.print("Invalid zipcode. ");
-    			    }
+ //   			    }
+ //   			    else {
+ //   				if (choice!=6) l.trackUI(choice, zip);
+ //   				System.out.print("Invalid zipcode. ");
+ //   			    }
     			} else {
     			    l.trackUI(in.next());
     			    System.out.print("Invalid zipcode. ");
