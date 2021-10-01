@@ -1,0 +1,59 @@
+current test, some explanations
+Q1.1526206
+Q2.(print 44 lines of (zipCode, 4 digit double) 
+Note that population.txt has 48 lines/zipcode,  
+- some of the zipcode(19108, 19109, 19110) in violations data is missing populations from population.txt, so skipped
+- some of the zipcode in population.txt has no info of fines in Parking data)
+19102 6.9347
+19103 4.9118
+19104 1.2435
+19106 4.1227
+19107 6.2616
+19111 0.0401
+19114 0.0021
+19118 0.3168
+19119 0.0609
+19120 0.1605
+19121 0.2897
+19122 0.1353
+19123 1.9564
+19124 0.174
+19125 0.1098
+19126 0.0764
+19127 1.9611
+19128 0.0797
+19129 0.3235
+19130 1.6743
+19131 0.0532
+19132 0.1774
+19133 0.1458
+19134 0.114
+19135 0.0912
+19136 0.0546
+19138 0.0215
+19139 0.4214
+19140 0.3243
+19141 0.4757
+19142 0.1878
+19143 0.0909
+19144 0.2852
+19145 0.295
+19146 0.9006
+19147 1.8546
+19148 0.3692
+19149 0.0859
+19150 0.0306
+19151 0.0505
+19152 0.0364
+19153 0.0325
+
+Q3.Q4 Q5, test with zipcode 19131
+
+Q3: getAveResMV(19131) --- 199243
+Q4: getAveResTLA(19131) --- 2548
+Q5: getTotalResMVperCap(19131) --- 66222
+
+Current reading and processing takes about 8~9s
+Current logger.log()function takes no argument, just printing out a testing
+Current UserInput class: no UI implemented, simply testing 
+Current Main class: no error handling simply testing

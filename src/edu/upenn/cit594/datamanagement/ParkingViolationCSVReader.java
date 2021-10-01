@@ -1,3 +1,4 @@
+package edu.upenn.cit594.datamanagement;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -5,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.simple.parser.ParseException;
+
+import edu.upenn.cit594.data.ParkingViolation;
 
 
 public class ParkingViolationCSVReader extends ParkingViolationFileReader {
@@ -45,8 +48,8 @@ public class ParkingViolationCSVReader extends ParkingViolationFileReader {
 				time = array[0];
 				fine = Integer.parseInt(array[1]);
 				description = array[2];
-				vehicleID = array[3];
-				state = array[4];
+				vehicleID = array[3].trim();
+				state = array[4].trim();
 				
 				violationID = Long.parseLong(array[5]);
 				zipCode = Integer.parseInt(array[6]);

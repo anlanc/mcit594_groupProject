@@ -1,3 +1,4 @@
+package edu.upenn.cit594.datamanagement;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,6 +9,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import edu.upenn.cit594.data.ParkingViolation;
 
 
 public class ParkingViolationJSONReader extends ParkingViolationFileReader {
@@ -42,6 +45,7 @@ public class ParkingViolationJSONReader extends ParkingViolationFileReader {
 				violationID = (long)jo.get("ticket_number");
 				//System.out.println("Read ti " +jo.get("ticket_number"));
 				vehicleID = (String)jo.get("plate_id");
+				vehicleID = vehicleID.trim();
 				time = (String)jo.get("date");				
 				
 				// Error handling: wrong type
@@ -57,6 +61,7 @@ public class ParkingViolationJSONReader extends ParkingViolationFileReader {
 				description = (String)jo.get("violation");
 				fine  = (int)(long)jo.get("fine");
 				state = (String)jo.get("state");
+				state = state.trim();
 			}
 			
 			// Error handling: wrong type expected
